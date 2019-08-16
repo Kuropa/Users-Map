@@ -1,8 +1,11 @@
+let users;
+
 function renderUser(user) {
     const userList = document.querySelector('.user-list');
 
     const userCard = document.createElement('div');
     userCard.className = 'user-card';
+    userCard.id = user.properties['id'];
 
     const userAvatar = document.createElement('div');
     userAvatar.className = 'user-avatar';
@@ -26,8 +29,8 @@ function renderUser(user) {
     url.target = '_blank';
 
     name.innerText = user.properties['userName'];
-    email.innerText = user.properties['email'];;
-    url.innerText = user.properties['url']
+    email.innerText = user.properties['email'];
+    url.innerText = user.properties['url'];
     userList.appendChild(userCard);
     userCard.appendChild(userAvatar);
     userAvatar.appendChild(avatarImg);
@@ -38,10 +41,9 @@ function renderUser(user) {
 };
 
 function parseDataFromServerAndRenderUsers(data) {
-    const users = JSON.parse(data).features;
+    users = JSON.parse(data).features;
     users.forEach(user => {
         renderUser(user);
-        addMarkerToMap(user);
     })
 };
 
