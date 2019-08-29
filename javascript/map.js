@@ -35,19 +35,11 @@ function isMarking(card, markers) {
     key in markers ? removeMarkerFromMap(key) : addMarkersToObj(card);
 };
 
-function isEmptyObj(card, markers) {
-    if (Object.keys(markers).length == 0) {
-        addMarkersToObj(card, users);
-    } else {
-        isMarking(card, markers);
-    }
-};
-
 function getCard() {
     const cardList = document.querySelector('.user-list');
     cardList.addEventListener('click', e => {
         const card = e.target.closest('.user-card');
-        isEmptyObj(card, markers);
+        isMarking(card, markers)
     })
 };
 
