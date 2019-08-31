@@ -2,29 +2,32 @@ body
 {
    width: 100%;
    margin: 0;
-   background-color: #D3FEF1;
    display: flex;
    justify-content: center;
+   position: relative;
 }
 
 .map-wrapper
 {
-    width: 1180px;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
 }
 
 #map 
 {
-    width: 995px;
+    width: 100vw;
     height: 100vh;
     position: fixed;
 }
 
 .user-list
 {
-    width: 240px;
+    width: 300px;
     display: flex;
     flex-wrap: wrap;
-    margin-right: 32px;
+    z-index: 2;
+    margin-left: auto;
 }
 
 .user-card
@@ -39,7 +42,7 @@ body
 }
 
 .user-card:hover{
-    background-color: #F3FFFE;
+    background-color: #F7F7F7;
 }
 
 .user-wrap
@@ -69,6 +72,7 @@ body
     font-size: 16px;
     color: #000000;
     word-wrap: break-word;
+    width: 170px;
 }
 
 .user-description-wrap
@@ -79,16 +83,18 @@ body
 
 .user-email, .user-url
 {
-    width: 150px;
+    width: 170px;
     font-family: 'Raleway', sans-serif;
     font-size: 10px;
+    word-wrap: break-word;
 }
 
 .user-url:link
 {
   color: #000000;  
 }
+
 .user-url:visited
 {
-    color: grey;
+    color: #8F8F8F;
 }
