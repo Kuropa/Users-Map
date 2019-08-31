@@ -12,7 +12,7 @@ function removeMarkerFromMap(key) {
     delete markers[key];
 };
 
-function addMarkerToMap(coordinates, id, card) {
+function addMarkerToMap(coordinates, id) {
     markers[id] = new mapboxgl.Marker({
         color: '#848484'
     })
@@ -30,7 +30,7 @@ function addMarkersToObj(card) {
         });
 
     const coordinates = user.geometry.coordinates;
-    addMarkerToMap(coordinates, id, card);
+    addMarkerToMap(coordinates, id);
 };
 
 function isMarked(card, markers) {
