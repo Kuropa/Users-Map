@@ -33,22 +33,18 @@ function addMarkersToObj(card) {
     addMarkerToMap(coordinates, id);
 };
 
-function isMarked(card, markers) {
-    const key = card.id;
-    const isMarkedCard = key in markers;
-    if (isMarkedCard) {
-        removeMarkerFromMap(key)
-        return;
-    }
-    addMarkersToObj(card);
-};
-
-function searchCard() {
+function listenToTheClickOnTheCard() {
     const cardList = document.querySelector('.user-list');
     cardList.addEventListener('click', e => {
         const card = e.target.closest('.user-card');
-        isMarked(card, markers)
-    })
+        const key = card.id;
+        const isMarkedCard = key in markers;
+        if (isMarkedCard) {
+            removeMarkerFromMap(key)
+            return;
+        }
+        addMarkersToObj(card);
+        })
 };
 
-searchCard();
+listenToTheClickOnTheCard();
