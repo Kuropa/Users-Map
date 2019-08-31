@@ -10,37 +10,45 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia3Vyb3BhIiwiYSI6ImNqejE3bW1yNzA3bDYzY25ybWJ4N
 function removeMarkerFromMap(key) {
     markers[key].remove();
     delete markers[key];
-    map.jumpTo({center: [100.507, 13.745], zoom: 0});
 };
 
-function addMarkerToMap(coordinates, id) {
-    markers[id] = new mapboxgl.Marker()
-        .setLngLat(coordinates)
-        .addTo(map)
-        map.jumpTo({center: coordinates, zoom: 0});
+function addMarkerToMap(coordinates, id, card) {
+    markers[id] = new mapboxgl.Marker({
+        color: '#848484'
+    })
+    .setLngLat(coordinates)
+    .addTo(map)
 };
 
 function addMarkersToObj(card) {
     const id = card.id;
-    users.find(user => {
-        if(user.properties['id'] == id) {
-            const coordinates = user.geometry.coordinates;
-            addMarkerToMap(coordinates, id);
+    const user = users.find(user => {
+        if (user.properties.id == id) {
+            return true;
         }
-    })
+        return false;
+        });
+
+    const coordinates = user.geometry.coordinates;
+    addMarkerToMap(coordinates, id, card);
 };
 
-function isMarking(card, markers) {
+function isMarked(card, markers) {
     const key = card.id;
-    key in markers ? removeMarkerFromMap(key) : addMarkersToObj(card);
+    const isMarkedCard = key in markers;
+    if (isMarkedCard) {
+        removeMarkerFromMap(key)
+        return;
+    }
+    addMarkersToObj(card);
 };
 
-function getCard() {
+function searchCard() {
     const cardList = document.querySelector('.user-list');
     cardList.addEventListener('click', e => {
         const card = e.target.closest('.user-card');
-        isMarking(card, markers)
+        isMarked(card, markers)
     })
 };
 
-getCard();
+searchCard();
