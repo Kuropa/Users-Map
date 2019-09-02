@@ -21,13 +21,42 @@ body
     position: fixed;
 }
 
+.user-panel
+{
+    width: 300px;
+    z-index: 2;
+    margin-left: auto;
+}
+
+.user-search
+{
+    width: 237px;
+    height: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 10px 10px 13px -9px rgba(0,0,0,0.2);
+    outline: none;
+    border: none;
+    padding-left: 40px;
+    background-image: url(../Img/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: 10px;
+    background-size: 20px;
+}
+
+.user-search:hover
+{
+    background-color: #F7F7F7;
+}
+
 .user-list
 {
     width: 300px;
     display: flex;
     flex-wrap: wrap;
-    z-index: 2;
-    margin-left: auto;
 }
 
 .user-card
@@ -97,4 +126,9 @@ body
 .user-url:visited
 {
     color: #8F8F8F;
+}
+
+.hide
+{
+    display: none;
 }

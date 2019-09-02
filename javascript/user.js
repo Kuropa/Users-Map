@@ -1,8 +1,30 @@
 let users;
 
-function renderUser(user) {
-    const userList = document.querySelector('.user-list');
+function searchUserCard(userList) {
+    const input = document.querySelector('.user-search');
+    const matches = userList.querySelectorAll('.user-card  .user-description-wrap  .user-name');
 
+    input.addEventListener('input', () => {
+        let searchValue = document.querySelector('.user-search').value;
+        searchValue = searchValue.charAt(0).toUpperCase() + searchValue.slice(1);
+
+        if (searchValue !== '') {
+            matches.forEach(e => {
+                if (e.innerText.includes(searchValue)) {
+                    e.closest('.user-card').classList.remove('hide');
+                } else {
+                    e.closest('.user-card').classList.add('hide');
+                }
+            });
+        } else {
+            matches.forEach(e => {
+                e.closest('.user-card').classList.remove('hide');
+            });
+        }
+    });
+};
+
+function renderUser(user, userList) {
     const userCard = document.createElement('div');
     userCard.className = 'user-card';
     userCard.id = user.properties['id'];
@@ -42,9 +64,11 @@ function renderUser(user) {
 
 function parseDataFromServerAndRenderUsers(data) {
     users = JSON.parse(data).features;
+    const userList = document.querySelector('.user-list');
     users.forEach(user => {
-        renderUser(user);
+        renderUser(user, userList);
     })
+    searchUserCard(userList);
 };
 
 function getDataFromServer() {
@@ -57,4 +81,5 @@ function getDataFromServer() {
     }
     xhr.send();
 };
+
 getDataFromServer();
