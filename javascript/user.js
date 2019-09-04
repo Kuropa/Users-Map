@@ -38,7 +38,7 @@ function renderUser(user, userList) {
     userDescriptionWrap.appendChild(url);
 };
 
-function removeAllCadr(userList) {
+function removeAllCadrs(userList) {
     while(userList.firstChild){
         userList.removeChild(userList.firstChild);
     }
@@ -51,7 +51,7 @@ function searchUserCard(users, userList) {
         let searchValue = input.value.toLowerCase();
 
         if (searchValue.length > 0) {
-            removeAllCadr(userList);
+            removeAllCadrs(userList);
             users.forEach(el => {
                 let name = el.properties['userName'].toLowerCase();
 
@@ -60,7 +60,7 @@ function searchUserCard(users, userList) {
                 }
             });
         } else {
-            removeAllCadr(userList);
+            removeAllCadrs(userList);
             parseUsers(users, userList);
         }
     });
