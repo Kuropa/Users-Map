@@ -1,29 +1,5 @@
 let users;
 
-function searchUserCard(userList) {
-    const input = document.querySelector('.user-search');
-    const matches = userList.querySelectorAll('.user-card  .user-description-wrap  .user-name');
-
-    input.addEventListener('input', () => {
-        let searchValue = document.querySelector('.user-search').value;
-        searchValue = searchValue.charAt(0).toUpperCase() + searchValue.slice(1);
-
-        if (searchValue !== '') {
-            matches.forEach(e => {
-                if (e.innerText.includes(searchValue)) {
-                    e.closest('.user-card').classList.remove('hide');
-                } else {
-                    e.closest('.user-card').classList.add('hide');
-                }
-            });
-        } else {
-            matches.forEach(e => {
-                e.closest('.user-card').classList.remove('hide');
-            });
-        }
-    });
-};
-
 function renderUser(user, userList) {
     const userCard = document.createElement('div');
     userCard.className = 'user-card';
@@ -62,13 +38,46 @@ function renderUser(user, userList) {
     userDescriptionWrap.appendChild(url);
 };
 
+function removeAllCadr(userList) {
+    while(userList.firstChild){
+        userList.removeChild(userList.firstChild);
+    }
+};
+
+function searchUserCard(users, userList) {
+    const input = document.querySelector('.user-search');
+    
+    input.addEventListener('input', () => {
+        let searchValue = input.value.toLowerCase();
+
+        if (searchValue.length > 0) {
+            removeAllCadr(userList);
+            users.forEach(el => {
+                let name = el.properties['userName'].toLowerCase();
+
+                if (name.includes(searchValue)) {
+                    renderUser(el, userList)
+                }
+            });
+        } else {
+            removeAllCadr(userList);
+            parseUsers(users, userList);
+        }
+    });
+};
+
+function parseUsers(users, userList) {
+    users.forEach(user => {
+        renderUser(user, userList);
+    });
+}
+
 function parseDataFromServerAndRenderUsers(data) {
     users = JSON.parse(data).features;
     const userList = document.querySelector('.user-list');
-    users.forEach(user => {
-        renderUser(user, userList);
-    })
-    searchUserCard(userList);
+    
+    parseUsers(users, userList)
+    searchUserCard(users, userList);
 };
 
 function getDataFromServer() {
