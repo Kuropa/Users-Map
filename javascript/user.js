@@ -1,8 +1,6 @@
 let users;
 
-function renderUser(user) {
-    const userList = document.querySelector('.user-list');
-
+function renderUser(user, userList) {
     const userCard = document.createElement('div');
     userCard.className = 'user-card';
     userCard.id = user.properties['id'];
@@ -40,11 +38,46 @@ function renderUser(user) {
     userDescriptionWrap.appendChild(url);
 };
 
+function removeAllCadrs(userList) {
+    while(userList.firstChild){
+        userList.removeChild(userList.firstChild);
+    }
+};
+
+function searchUserCard(users, userList) {
+    const input = document.querySelector('.user-search');
+    
+    input.addEventListener('input', () => {
+        let searchValue = input.value.toLowerCase();
+
+        if (searchValue.length > 0) {
+            removeAllCadrs(userList);
+            users.forEach(el => {
+                let name = el.properties['userName'].toLowerCase();
+
+                if (name.includes(searchValue)) {
+                    renderUser(el, userList)
+                }
+            });
+        } else {
+            removeAllCadrs(userList);
+            parseUsers(users, userList);
+        }
+    });
+};
+
+function parseUsers(users, userList) {
+    users.forEach(user => {
+        renderUser(user, userList);
+    });
+}
+
 function parseDataFromServerAndRenderUsers(data) {
     users = JSON.parse(data).features;
-    users.forEach(user => {
-        renderUser(user);
-    })
+    const userList = document.querySelector('.user-list');
+    
+    parseUsers(users, userList)
+    searchUserCard(users, userList);
 };
 
 function getDataFromServer() {
@@ -57,4 +90,5 @@ function getDataFromServer() {
     }
     xhr.send();
 };
+
 getDataFromServer();
